@@ -1,5 +1,7 @@
 import random
 
+GConstant = 6.67 * 10**-11
+
 a = 1
 b = 2
 print(a,b)
@@ -53,11 +55,29 @@ name = name.title()
 print(len(name))
 print(name)
 
-def calculateGravitationalForce(gravitationalConstant: float, massOne: float, massTwo: float, distance: float):
-    force = gravitationalConstant * ((massOne + massTwo) / distance)
-    return force
+def calculateGravitationalForce():
+    massOne = 'hi'
+    massTwo = 'hi'
+    distance = 'hi'
+    while (type(massOne) != float):
+        try:
+            massOne = float(input('Enter the mass of the first planet in kgs (number followed by e and then power e.g 2.4e10) '))
+        except:
+            print('Please put in a float')
+    while (type(massTwo) != float):
+        try:
+            massTwo = float(input('Enter the mass of the second planet in kgs (number followed by e and then power e.g 2.4e10) '))
+        except:
+            print('Please put in a float')
+    while (type(distance) != float):
+        try:
+            distance = float(input('Enter the distance between the two planets in metres squared (number followed by e and then power e.g 2.4e10) '))
+        except:
+            print('Please put in a float')
+    force = GConstant * ((massOne + massTwo) / distance)
+    return str(force) + 'N'
 
-print(calculateGravitationalForce(6.67 * 10**-11, float(input('Enter the mass of the first planet in kgs ')), float(input('Enter the mass of the second planet in kgs ')), float(input('Enter the distance between the two planets in metres squared '))))
+print(calculateGravitationalForce())
 
 def calculateDiscount(price: float):
     if (price >= 300):
@@ -80,7 +100,18 @@ def rep_cat(x, y):
 
 print(rep_cat(int(input('Enter the first number ')), int(input('Enter the second number '))))
 
-user_action = input('Enter a choice (rock, paper, scissors): ')
+age = int(input('What is your age? '))
+if (age >= 18):
+    print('You are old enough to vote!')
+else:
+    print('You are not old enough to vote.')
+
+user_action = None
+while (user_action != 'rock' and user_action != 'paper' and user_action != 'scissors'):
+    try:
+        user_action = input('Enter a choice (rock, paper, scissors): ')
+    except:
+        print('Wrong input.')
 possible_actions = ['rock', 'paper', 'scissors']
 computer_action = random.choice(possible_actions)
 print(f'\nYou chose {user_action}. The computer chose {computer_action}.\n')
@@ -103,3 +134,42 @@ elif (user_action == 'paper'):
         print('Scissors cuts paper! You lose!')
 else:
     print('Wrong input entered.')
+
+user_action = None
+while (user_action != 'rock' and user_action != 'paper' and user_action != 'scissors' and user_action != 'lizard' and user_action != 'spock'):
+    try:
+        user_action = input('Enter a choice (rock, paper, scissors, lizard, spock) ')
+    except:
+        print('Wrong input')
+possible_actions = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+computer_action = random.choice(possible_actions)
+print(f'\nYou chose {user_action}. The computer chose {computer_action}\n')
+if (user_action == computer_action):
+    print(f'Both players chose {user_action}! Both players tie!')
+elif (user_action == 'rock'):
+    if (computer_action == 'lizard' or computer_action == 'scissors'):
+        print('Congratulations you win!')
+    else:
+        print('Oof you lose :(')
+elif (user_action == 'paper'):
+    if (computer_action == 'rock' or computer_action == 'spock'):
+        print('Congratulations you win!')
+    else:
+        print('Oof you lose :(')
+elif (user_action == 'scissors'):
+    if (computer_action == 'paper' or computer_action == 'lizard'):
+        print('Congratulations you win!')
+    else:
+        print('Oof you lose :(')
+elif (user_action == 'lizard'):
+    if (computer_action == 'spock' or computer_action == 'paper'):
+        print('Congratulations you win!')
+    else:
+        print('Oof you lose :(')
+elif (user_action == 'spock'):
+    if (computer_action == 'rock' or computer_action == 'paper'):
+        print('Congratulations you win!')
+    else: 
+        print('You lose')
+else:
+    print('Wrong input entered :(')
