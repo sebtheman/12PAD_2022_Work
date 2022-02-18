@@ -41,13 +41,13 @@ for i in range(6):
         lineTwo += '|' + ' '*3 + 'O' + ' '*3 + '| '
         lineThree += '|' + ' '*7 + '| '
     elif (randomNumber == 2):
-        lineOne += '|' + 'O' + ' '*6 + '| '
+        lineOne += '| ' + 'O' + ' '*5 + '| '
         lineTwo += '|' + ' '*7 + '| '
-        lineThree += '|' + ' '*6 + 'O| '
+        lineThree += '|' + ' '*5 + 'O | '
     elif (randomNumber == 3):
-        lineOne += '|' + 'O' + ' '*6 + '| '
+        lineOne += '|' + ' O' + ' '*5 + '| '
         lineTwo += '|' + ' '*3 + 'O' + ' '*3 + '| '
-        lineThree += '|' + ' '*6 + 'O| '
+        lineThree += '|' + ' '*5 + 'O | '
     elif (randomNumber == 4):
         lineOne += '| ' + 'O' + ' '*3 + 'O' + ' ' + '| '
         lineTwo += '|' + ' '*7 + '| '
