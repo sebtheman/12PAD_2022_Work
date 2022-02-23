@@ -131,7 +131,162 @@ print('You got it!')
 choices = ['spaghetti', 'macaroni', 'chicken', 'beef', 'burgers', 'sushi', 'steak', 'mcdonalds', 'caviar', 'electricity', 'food']
 computerChoice = random.choice(choices)
 guess = input('Guess my favorite food: ')
-while guess.lower() != computerChoice:
+while guess.lower() != 'skip' and guess.lower() != computerChoice:
     print('Not even close.')
     guess = input('Guess? ')
-print(f'Congratulations! The answer was {computerChoice}')
+if guess.lower() == 'skip':
+    print('Game skipped!')
+else:
+    print(f'Congratulations! The answer was {computerChoice}')
+
+sounds = {'dog': 'a barker', 'cat': 'a meower', 'bird': 'a tweeter'}
+print(sounds)
+print(sounds['dog'])
+
+if 'cat' in sounds:
+    print('A cat key has been found in the sounds dictionary')
+else:
+    print('Cat has not been found in the sounds dictionary')
+
+if 'mouse' in sounds:
+    print('A mouse key has been found in the sounds dictionary')
+else:
+    print('A mouse key has not beend found in the sounds dictionary')
+
+for animal in sounds:
+    print('a', animal, 'is', sounds[animal])
+    print(animal)
+
+animal = 'cat'
+print('a', animal, 'is', sounds[animal])
+sounds[animal] = 'a purrer' #Change the cat definition in the sounds dictionary
+print('a', animal, 'is now', sounds[animal])
+
+sounds['mouse'] = 'a squeaker' #Add a new definition for a mouse in the sounds dictionary
+animal = 'mouse'
+print('a', animal, 'is', sounds[animal])
+print('Final dictionary contents:')
+print(sounds)
+
+KEYPAD = {'A': '2', 'B': '2', 'C': '2', 'D': '3', 'E': '3',
+'F': '3', 'G': '4', 'H': '4', 'I': '4', 'J': '5',
+'K': '5', 'L': '5', 'M': '6', 'N': '6', 'O': '6',
+'P': '7', 'Q': '7', 'R': '7', 'S': '7', 'T': '8',
+'U': '8', 'V': '8', 'W': '9', 'X': '9', 'Y': '9',
+'Z': '9', }
+
+wordToSMS = input('Enter a word to get SMS output: ')
+wordToSMS = ''.join(filter(str.isalpha, wordToSMS)) #Gets rid of all non-alphabet characters
+SMSOutput = ''
+for letter in wordToSMS:
+    SMSOutput += KEYPAD[letter.upper()]
+print(wordToSMS, 'is', SMSOutput, 'in SMS.')
+
+line = input('Name and number: ')
+phonebook = {}
+while line:
+    name, number = line.split()
+    phonebook[name] = number
+    line = input('Name and number: ')
+print(phonebook)
+
+line = input('Enter your name and favourite color: ')
+favColors = {}
+while line:
+    name, favColor = line.split()
+    favColors[name] = favColor
+    line = input('Enter your name and favourite color: ')
+print(favColors)
+
+dictionaryTest = {'Sebastian': 'hi', 'Human': 'I am a human'}
+print(dictionaryTest.get('Sebastian', 'Default value is used'))
+print(dictionaryTest.get('Human', 'Default value is used'))
+print(dictionaryTest.get('Alien', 'Default value is used'))
+
+sounds = {'dog': 'barks', 'cat': 'meows'}
+animal = input('Animal: ')
+while animal:
+    sound = sounds.get(animal, 'makes noise')
+    print('A', animal, sound)
+    animal = input('Animal: ')
+
+d1 = {'Sebastian': 'Is a person', 'OtherPeople': 'Are people'}
+d2 = {'Sebastian': 'Is not a person', 'OtherPeople': 'Are not people'}
+d2.update(d1) #Spread the truth and update d2 to make it have the same values as d1
+
+color = input('Enter a car color: ').lower()
+colors = {}
+while color:
+    colors[color] = colors.get(color, 0) + 1
+    color = input('Enter a car color: ').lower()
+print(colors)
+for color in colors:
+    print('Cars that are', str(color) + ':', colors[color])
+
+lineWords = input('Enter a line: ')
+words = []
+wordOccurences = {}
+lettersInText = 0
+while lineWords:
+    lineWords = lineWords.strip().lower().split()
+    for word in lineWords:
+        words.append(word)
+    lineWords = input('Enter a line: ')
+print(words)
+for word in words:
+    lettersInText += len(word)
+    wordOccurences[word] = int(wordOccurences.get(word, 0)) + 1
+print(wordOccurences)
+print('There are', lettersInText, 'letters in the text.')
+for word in wordOccurences:
+    print(word, 'occured', wordOccurences[word], 'times in the text')
+
+sumAllItems = [1, 2, 3, 'hi']
+cleanedSumAllItems = []
+for item in sumAllItems:
+    if type(item) == int:
+        cleanedSumAllItems.append(item)
+sumOfAllItems = sum(cleanedSumAllItems)
+print(sumOfAllItems)
+
+multiplyAllItems = [1, 2, 3, 4, 5, 'hi']
+result = 1
+for item in multiplyAllItems:
+    if type(item) is int:
+        result *= item
+print(result)
+
+largestNumInList = [10, 20, 30, 40, 50, 'hi']
+cleanedLargestNumInList = []
+for item in largestNumInList:
+    if type(item) == int:
+        cleanedLargestNumInList.append(item)
+print(max(cleanedLargestNumInList))
+
+smallestNumInList = [10, 20, 30, 40, 50, 'hi']
+cleanedSmallestNumInList = []
+for item in smallestNumInList:
+    if type(item) == int:
+        cleanedSmallestNumInList.append(item)
+print(min(cleanedSmallestNumInList))
+
+def lengthAndCharacterCheck(stringList: list):
+    result = 0
+    for item in stringList:
+        firstLetter = None
+        lastLetter = None
+        letters = []
+        if len(item) >= 2:
+            for letter in item:
+                letters.append(item)
+            firstLetter = letters[0]
+            lastLetter = letters[-1]
+            if firstLetter is lastLetter:
+                result += 1
+            else:
+                continue
+        else:
+            continue
+    print('Result:', result)
+
+lengthAndCharacterCheck(['abc', 'cba', 'aba', '1221'])
