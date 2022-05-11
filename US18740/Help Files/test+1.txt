@@ -1,0 +1,79 @@
+# Name
+# Create a simple computer program to meet a set brief
+# US18740    Version 6    Level 2    Credits 3
+
+import re
+
+cash_register_slip = ''' 
+==================================================
+                Cash register slip
+'''
+
+
+def isfloat(num):
+    try:
+        num = float(num)
+        return num
+    except:
+        return False
+
+
+def test(args):
+    total = 0
+    for i in args:
+        if isfloat(i):
+            i = isfloat(i)
+            print(i)
+            total += i
+        else:
+            continue
+    return {'Total': total}
+
+
+def isinteger(number):
+    """
+    Check if number is an integer.
+
+    :param number: This will converted to integer
+    :return: number (if successful)
+             False  (if unsuccessful)
+    """
+    try:
+        number = int(number)
+        return number
+    except:
+        return False
+
+
+def main():
+    user_items = input("Enter the prices of items purchased\n>> ")
+    user_items = user_items.split(',')
+    user_items = list(user_items)
+
+    print(user_items)
+
+
+    if len(user_items) == 1:
+        user_items = str(user_items)
+        user_items.strip(user_items)
+        print(user_items)
+
+        user_items = user_items.replace('[', '')
+        user_items = user_items.replace(']', '')
+        user_items = user_items.replace(' ', ',')
+        user_items = user_items.replace(',,', '')
+        user_items = user_items.replace('\'', '')
+        user_items = user_items.replace('$', '')
+
+        print('user_items: ', user_items)
+        user_items = user_items.split(',')
+        print('user_items: ', user_items)
+
+    print(user_items)
+
+    total = test(user_items)['Total']
+    print('total: ', total)
+    # total = test('5.84', 6, 'a', 'test')['Total']
+
+if __name__ == '__main__':
+    main()

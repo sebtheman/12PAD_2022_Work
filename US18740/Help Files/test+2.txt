@@ -1,0 +1,90 @@
+def isfloat(number):
+    try:
+        number = float(number)
+        return number
+    except ValueError:
+        return False
+
+
+def discount(percent, total):
+    if total > 100:
+        return {"Final Price": total - (total * percent),
+                "Discounted Amount": total * percent,
+                "Percent": percent * 100}
+    else:
+        return False
+
+
+def receipt(items):
+    total = 0
+    for i in items:
+        total += i
+
+    maximum_price = max(items)
+    item_amount = len(items)
+    average_price = total / item_amount
+
+    percentage = 0.05  # Discount Amount
+
+    if discount(percentage, total) is not False:
+        discounted_amount = discount(percentage, total)['Discounted Amount']
+        final_price = discount(percentage, total)['Final Price']
+        percent = discount(percentage, total)['Percent']
+    else:
+        discounted_amount = 0
+        percent = 0
+        final_price = total
+
+    return {"Total": total, "Percent": percent, "Final Price": final_price,
+            "Discounted Amount": discounted_amount, "Item Amount": item_amount,
+            "Maximum Price": maximum_price, "Average Price": average_price}
+
+
+def main():
+    items = []
+
+    print("=" * 51)
+    print("Welcome!\n".center(51))
+
+    while True:
+        item_price = input('\nEnter item price: $')
+        if isfloat(item_price) is not False:
+            item_price = isfloat(item_price)
+            if item_price == 0.0:
+                if len(items) > 0:
+                    total = receipt(items)['Total']
+                    percent = receipt(items)['Percent']
+                    discounted_amount = receipt(items)['Discounted Amount']
+                    final_price = receipt(items)['Final Price']
+                    item_amount = receipt(items)['Item Amount']
+                    maximum_price = receipt(items)['Maximum Price']
+                    average_price = receipt(items)['Average Price']
+
+                    print("=" * 51, end="")
+                    print("""
+                    Josh's Shop
+
+    Total:              ${:.2f}
+    Discount({:.1f}%):     ${:.2f}
+    Final Price:        ${:.2f}
+            Number of articles bought: {}
+            Most expensive:            ${:.2f}
+            Average price paid:        ${:.2f}
+
+                    """.format(total, percent, discounted_amount, final_price,
+                               item_amount, maximum_price, average_price))
+                break
+            elif item_price > 0:
+                items.append(item_price)
+                print("Item costing ${:.2f} was recorded.".format(item_price))            
+            else:
+                print("You must enter a positive number!")
+        else:
+            print("You must enter either a positive number or '0'!")
+    
+    print("Thanks for coming!".center(51))
+    print("=" * 51)
+
+
+if __name__ == '__main__':
+    main()

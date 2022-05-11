@@ -1,0 +1,139 @@
+# Name
+# Purpose: Get prices from the user then:
+#          print: total, discount, final cost, number of items purchased,
+#                 maximum item cost price, average item cost price.
+# File name: register_slip.py
+# Date: 3/04/2022
+
+
+def isfloat(number):
+    """
+    Check if number is a float.
+
+    :param number: This will converted to float
+    :return: float  (if successful)
+             False  (if unsuccessful)
+    """
+    try:
+        number = float(number)
+        return number
+    except:
+        return False
+
+
+def discount(total):
+    """
+    Check if total price can be discounted.
+
+    :param total: To calculate the final price and discounted amount
+    :return: {"Final Price"
+              "Discounted Amount"
+              "Percent"}
+    """
+    percent = 0.05
+    if total > 100:
+        return {"Final Price": total - (total * percent),
+                "Discounted Amount": total * percent,
+                "Percent": percent * 100}
+    else:
+        return False
+
+
+def receipt(items):
+    """
+    Prints the receipt.
+
+    :param items: A list of all prices entered
+    :return: None
+    """
+    total = 0
+    for i in items:
+        total += i
+
+    maximum_price = max(items)
+    item_amount = len(items)
+    average_price = total / item_amount
+
+    if discount(total) is not False:
+        discounted_amount = discount(total)['Discounted Amount']
+        final_price = discount(total)['Final Price']
+        percent = discount(total)['Percent']
+    else:
+        discounted_amount = 0
+        percent = 0
+        final_price = total
+
+    print("=" * 50, end="")
+    print("""
+                   Josh's Shop
+
+    Total:              ${:.2f}
+    Discount({:.1f}%):     ${:.2f}
+    Final Price:        ${:.2f}
+            Number of articles bought: {}
+            Most expensive:            ${:.2f}
+            Average price paid:        ${:.2f}
+
+    """.format(total, percent, discounted_amount, final_price, item_amount,
+               maximum_price, average_price))
+
+
+def welcome():
+    """ Welcomes the user. """
+    print('Welcome!\n')
+
+
+def leave():
+    """ Farewell the user. """
+    print("""                Thanks for coming!            """)
+    print("=" * 50)
+
+
+def main():
+    """ Start of the receipt slip program. """
+
+    welcome()
+
+    print("You must enter the price of each purchased item ",
+          "(separated by a space or comma)then press enter",
+          "to get the receipt.")
+
+    item_prices = input('Enter item prices: $')
+    test_string = 'abcdefghijklmnopqrstuvwxyz' \
+                  'ABCDEFGHIJKLMNOPQRSTUVWXYZ~`' \
+                  '!@#$%^&*()-_=+{}[]|\\;:\'",<>/?'
+    test_case = list(test_string)
+
+    for i in test_case:
+        item_prices = item_prices.replace(i, '')
+
+    if ',' in item_prices:
+        item_prices = [x.strip() for x in item_prices.split(',')]
+    elif ', ' in item_prices:
+        item_prices = item_prices.split(", ")
+    elif ' ,' in item_prices:
+        item_prices = item_prices.split(" ,")
+    else:
+        item_prices = item_prices.split(" ")
+
+    for i in item_prices:
+        if ' ' in i:
+            item_prices.remove(' ')
+        if '' in item_prices:
+            item_prices.remove('')
+        if ',' in item_prices:
+            item_prices.remove(',')
+
+    items = []
+    for item in item_prices:
+        try:
+            item = float(item)
+            items.append(item)
+        except:
+            print('Fail')
+
+    receipt(items)
+    leave()
+
+if __name__ == '__main__':
+    main()
