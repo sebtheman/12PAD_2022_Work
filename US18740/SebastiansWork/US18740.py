@@ -1,4 +1,4 @@
-import shutil, random, time
+import shutil
 
 def printCenteredText(textToCentre, lineSpacesAfterText = 0, lineSpacesBeforeText = 0):
         if lineSpacesBeforeText > 0: print('\n' * lineSpacesBeforeText)
@@ -13,10 +13,110 @@ def printOneCharacterAcrossTerminal(character):
 
 def main():
     storeNames = ['On A Roll', 'Bread 4U', 'Upper Crust', 'Knead 2 Know']
-    finalStoreNamesList = []
     printAlphabeticalOrder = None
     storeValues = {}
     daysInAWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+
+    def addStores():
+        userInput = None
+        while True:
+            while userInput != 'Y' and userInput != 'N':
+                userInput = input('Would you like to add a new store? Y or N: ')
+
+                if userInput != 'Y' and userInput != 'N': 
+                    #If input is not a Y or N tell the user they entered the wrong value then start from the top of the while loop
+                    print('Please enter a Y or N.')
+                    continue
+
+                if userInput == 'Y':
+                    userInput = None
+
+                    storeNameInput = ''
+
+                    while len(storeNameInput.strip()) == 0 and all(letter.isalpha() or letter.isspace() or letter == "'" for letter in storeNameInput):
+                        storeNameInput = input("Please enter the name of the store you want to add: ")
+
+                        if storeNameInput == 'xxx':
+                            break
+
+                        if len(storeNameInput.strip()) == 0:
+                            #Store name is empty so tell the user the store name must not be empty and then start from the top of the while loop
+                            print('Store name must not be empty')
+                            storeNameInput = ''
+                            continue
+
+                        if all(letter.isnumeric() for letter in storeNameInput):
+                            #Store name is all numbers so tell the user the store name must not only be all numbers and then start from the top of the while loop
+                            print('Store name must not only contain numbers.')
+                            storeNameInput = ''
+                            continue
+                        
+                        if any(letter.isalpha() == False and letter.isspace() == False and letter != "'" and letter.isnumeric() == False for letter in storeNameInput):
+                            #Store name is not a string so tell the user the store name must be a string and then start from the top of the while loop
+                            print('Store name must only contain letters, spaces, numbers, and apostrophes.')
+                            storeNameInput = ''
+                            continue
+
+                        storeNameInput = storeNameInput.strip() #Get rid of any trailing whitespace
+
+                        if storeNameInput in storeNames:
+                            #You cannot have duplicate store names so tell the user that there cannot be 2 stores with the same name and then start from the top of the while loop
+                            print('You cannot have 2 stores with the same name.')
+                            storeNameInput = ''
+                            continue
+
+                        #Store name is a string and is not empty so ask the user to confirm that they want to add the store
+                        confirmAddStoreInput = None
+                        while confirmAddStoreInput != 'Y' and confirmAddStoreInput != 'N':
+                            confirmAddStoreInput = input(f'Are you sure you want to add {storeNameInput} as a store? Y or N: ')
+
+                            if confirmAddStoreInput != 'Y' and confirmAddStoreInput != 'N':
+                                #User did not enter a Y or N so tell them they entered the wrong value and start from the top of the while loop
+                                print('Please enter a Y or N.')
+                                continue
+
+                            if confirmAddStoreInput == 'Y':
+                                storeNames.append(storeNameInput)
+                                break
+                            else:
+                                #The user does not want to add the store so break the loop
+                                break
+                        
+                        #Break out of this while loop and go back to the "Would you like to add a new store" loop
+                        break
+                    break
+                else:
+                    if len(storeNames) == 0:
+                        #Tell the user that they must have at least one store to continue and then go back to the top of the while loop
+                        print('You must have more than one store to continue.')
+                        userInput = None
+                        continue
+            
+            tempStoreNames = storeNames
+            for item in tempStoreNames:
+                correctStore = None
+
+                while correctStore != 'Y' and correctStore != 'N':
+                    correctStore = input(f'Is {item} a correct store? Y or N: ')
+
+                    if correctStore != 'Y' and correctStore != 'N':
+                        print('You must enter only a Y or an N.')
+
+                    if correctStore == 'N':
+                        correctStoreConfirm = input('Enter Y to confirm deleting this store: ')
+                        if correctStoreConfirm == 'Y':
+                            storeNames.remove(item)
+                        else:
+                            correctStore = None
+
+            if len(storeNames) == 0:
+                printOneCharacterAcrossTerminal('-')
+                printCenteredText('You must have at least one store to continue', 1, 1)
+                printOneCharacterAcrossTerminal('-')
+                userInput = None
+            else:
+                print('Continuing')
+                break
 
     def addStoreInformation(listToUse):
         for store in listToUse:
@@ -63,69 +163,7 @@ def main():
 
     printCenteredText('Welcome to the Mr Knead Store Success Calculator Program!', 1, 1)
 
-    userInput = None
-    while userInput != 'Y' and userInput != 'N':
-        userInput = input('Would you like to add a new store? Y or N: ')
-
-        if userInput != 'Y' and userInput != 'N': 
-            #If input is not a Y or N tell the user they entered the wrong value then start from the top of the while loop
-            print('Please enter a Y or N.')
-            continue
-
-        if userInput == 'Y':
-            userInput = None
-
-            storeNameInput = ''
-
-            while len(storeNameInput.strip()) == 0 and all(letter.isalpha() or letter.isspace() or letter == "'" for letter in storeNameInput):
-                storeNameInput = input("Please enter the name of the store you want to add: ")
-
-
-                if len(storeNameInput.strip()) == 0:
-                    #Store name is empty so tell the user the store name must not be empty and then start from the top of the while loop
-                    print('Store name must not be empty')
-                    storeNameInput = ''
-                    continue
-
-                if all(letter.isnumeric() for letter in storeNameInput):
-                    #Store name is all numbers so tell the user the store name must not only be all numbers and then start from the top of the while loop
-                    print('Store name must not only contain numbers.')
-                    storeNameInput = ''
-                    continue
-                
-                if any(letter.isalpha() == False and letter.isspace() == False and letter != "'" and letter.isnumeric() == False for letter in storeNameInput):
-                    #Store name is not a string so tell the user the store name must be a string and then start from the top of the while loop
-                    print('Store name must only contain letters, spaces, numbers, and apostrophes.')
-                    storeNameInput = ''
-                    continue
-
-                storeNameInput = storeNameInput.strip() #Get rid of any trailing whitespace
-
-                if storeNameInput in storeNames:
-                    #You cannot have duplicate store names so tell the user that there cannot be 2 stores with the same name and then start from the top of the while loop
-                    print('You cannot have 2 stores with the same name.')
-                    storeNameInput = ''
-                    continue
-
-                #Store name is a string and is not empty so ask the user to confirm that they want to add the store
-                confirmAddStoreInput = None
-                while confirmAddStoreInput != 'Y' and confirmAddStoreInput != 'N':
-                    confirmAddStoreInput = input(f'Are you sure you want to add {storeNameInput} as a store? Y or N: ')
-
-                    if confirmAddStoreInput != 'Y' and confirmAddStoreInput != 'N':
-                        #User did not enter a Y or N so tell them they entered the wrong value and start from the top of the while loop
-                        print('Please enter a Y or N.')
-                        continue
-
-                    if confirmAddStoreInput == 'Y':
-                        storeNames.append(storeNameInput)
-                        break
-                    else:
-                        #The user does not want to add the store so break the loop
-                        break
-                
-                #Break out of this while loop and go back to the "Would you like to add a new store" loop
-                break
+    addStores()
 
     printCenteredText('List of stores: ' + ', '.join(storeNames), 1, 1)
 
@@ -138,46 +176,13 @@ def main():
             printAlphabeticalOrder = None
             continue
 
-    for item in storeNames:
-        correctStore = None
-
-        while correctStore != 'Y' and correctStore != 'N':
-            correctStore = input(f'Is {item} a correct store? Y or N: ')
-
-            if correctStore != 'Y' and correctStore != 'N':
-                #Correct store is not a Y or N. Tell the user that they can only enter a Y or an N and then start back from the top of the while loop
-                print('You must enter only a Y or an N.')
-                continue
-
-            if correctStore == 'Y':
-                finalStoreNamesList.append(item)
-            elif correctStore == 'N':
-                correctStoreConfirm = input('Enter Y to confirm deleting this store: ')
-                if correctStoreConfirm == 'Y':
-                    break #Move to the next item in the for item in storeNames loop
-                else:
-                    correctStore = None
-                    continue
-
-    storeNames = []
-    if len(finalStoreNamesList) == 0:
-        print('No stores have been entered. Initiating bankrupt sequence.')
-        time.sleep(2)
-        for i in range(500):
-            lineToPrint = []
-            for i in range(shutil.get_terminal_size().columns):
-                lineToPrint.append(random.choice(['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', ' ']))
-            print(''.join(lineToPrint))
-        print('Bankrupt sequence has finished.')
-        quit()
-
-    addStoreInformation(finalStoreNamesList)
+    addStoreInformation(storeNames)
 
     #If any stores had incorrect information, let the user fill in correct information now
     incorrectStores = ['dummy item'] #Dummy item is placed here to get the while loop to run
     while len(incorrectStores) > 0:
         incorrectStores = [] #Get rid of dummy item
-        for store in finalStoreNamesList:
+        for store in storeNames:
             try:
                 #If this succeeds then the stores information was correct
                 readValue = storeValues[store]
